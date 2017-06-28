@@ -1,0 +1,10 @@
+<!--putdata.wxml-->
+<text>putdata.wxml</text>
+<view class="page__bd page__bd_spacing">
+    <button class="weui-btn" 
+            type="primary"
+            bindtap="putdata">
+            页面主操作 Normal
+    </button>
+        
+</view>

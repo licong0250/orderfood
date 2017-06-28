@@ -1,0 +1,8 @@
+<!--fooddetail.wxml-->
+<view wx:for="{{fooddetaillist}}" >
+    <view wx:if="{{item.id == ids}}">
+      <view class="classname">{{item.name}}</view>
+      <view class="classname">{{item.ingred}}</view>
+      
+    </view>
+  </view>

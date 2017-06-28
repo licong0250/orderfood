@@ -1,0 +1,63 @@
+/**app.wxss**/
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 200rpx 0;
+  box-sizing: border-box;
+} 
+.search-box{
+    
+    z-index: 2;
+    width: 640rpx;
+    height: 80rpx;
+    margin: 0 30rpx;
+    margin-left:8%;
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    top: 6rpx;
+    border: 1rpx solid #c47a19;
+    box-shadow: 0 0 3rpx #c47a19;
+    border-radius: 12rpx;
+    background: #fff;
+      
+}
+.search-icon{
+    width: 80rpx;
+    height: 80rpx;
+    border-radius: 10rpx 0 0 10rpx;
+    display: flex; 
+    justify-content: center;
+    align-items: center
+}
+.search-icon image{ 
+    width: 40rpx;
+    height: 40rpx;
+ 
+    
+}
+.search-input{
+    width: 320rpx;
+    height: 80rpx;
+    color: #989898;
+    font-size: 30rpx;
+    border: none;
+    padding-right: 10rpx;
+    line-height: 80rpx
+}
+.search-btn{ 
+    width: 120rpx;
+    height: 80rpx;
+    background: #2d2d2d;
+    color: white;
+    font-size: 30rpx;
+    border-color: #2d2d2d;
+    border-radius: 0 10rpx 10rpx 0;
+    line-height: 80rpx;
+    text-align: center;
+    margin-right:-21rpx;
+ 
+}
