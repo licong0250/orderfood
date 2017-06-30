@@ -8,24 +8,27 @@
 <view class="shopbody">
   <view class="menu">
       <view class="menuitem {{itemName.tag==selected?'clickSel':'removeSel'}}"  
-        wx:for="{{menu}}" 
-        wx:for-index="idx" 
-        wx:for-item="itemName"
-        bindtap="clickmenu" id="{{ itemName.tag }}">
+            wx:for="{{menu}}" 
+            wx:for-index="idx" 
+            wx:for-item="itemName"
+            catchtap="clickmenu" 
+            id="{{ itemName.tag }}">
         
         {{itemName.name}}
-        
-              
-        
+      
       </view>
       
   </view>
    
-  <view class="detail" bindtap="getImgUrl">
+  <view class="detail">
     <view class="weui-panel__bd wrapper-content">
-    <scroll-view scroll-y style="height: 396px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}" >
-       <navigator 
-                  hover-class="weui-cell_active"
+    <scroll-view scroll-y style="height: 396px;" 
+                  catchscrolltoupper="upper" 
+                  catchscrolltolower="lower" 
+                  catchscroll="scroll" 
+                  scroll-into-view="{{toView}}" 
+                  scroll-top="{{scrollTop}}" >
+            <view hover-class="weui-cell_active"
                   class="weui-media-box weui-media-box_appmsg"
                   wx:for="{{fooddetail}}"
                   wx:for-item="itemName" 
@@ -48,20 +51,37 @@
                         ￥{{itemName.price}} 
                   </view>
                 </view>
-                <view >
-                  <button type="primary" 
-                          size="mini" 
-                          bindtap="addfood" 
-                          id="{{itemName.price}}"  
-                          data-foodname="{{itemName.name}}"
-                          data-foodimg="{{itemName.imgurl}}" 
-                          >+
-                  </button>  
+                <view class="plusandminus ">
+                 
+                  <view  wx:if="{{ itemName.count > 0}}" class="minus weui-flex__item">
+                              <text   
+                                        catchtap="deletefood" 
+                                        id="{{itemName.price}}"  
+                                        data-foodname="{{itemName.name}}"
+                                        data-foodimg="{{itemName.imgurl}}"
+                                        data-count="{{itemName.count}}"
+                                        style="color:#fff"
+                              >-</text>
+                  </view>
+                  <view class="weui-flex__item">
+                       <text wx:if="{{ itemName.count > 0}}" class="number">{{itemName.count}}</text>
+                  </view>
+                        
+                  <view class="plus weui-flex__item">
+                            <text bindtap="addfood"   
+                                      id="{{itemName.price}}"  
+                                      data-foodname="{{itemName.name}}"
+                                      data-foodimg="{{itemName.imgurl}}" 
+                                      data-count="{{itemName.count}}"
+                                      style="color:#fff"
+                            >+</text> 
+                  </view>
+                      
                 </view>
               </view>
           </view>
           
-        </navigator>
+        </view>
         </scroll-view >
     </view>
   </view>
@@ -74,7 +94,7 @@
       <image mode="scaleToFill" 
             style="width: 48px; height: 48px;"        
             src="../assets/img/shoppinglist.png"
-            bindtap="showfooddetail">
+            catchtap="showfooddetail">
       </image>
     </view>
     <view class="tab-bubble"  wx:if="{{ numbers > 0}}">
@@ -91,19 +111,24 @@
   </view>
 </view>
 <view class="commodity_screen" 
-      bindtap="hideModal" 
+      catchtap="hideModal" 
       wx:if="{{showModalStatus}}">
 </view>
 <view animation="{{animationData}}" 
       class="commodity_attr_box wrapper-content" 
       wx:if="{{showModalStatus}}">
-      <scroll-view scroll-y style="height: 500rpx;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+      <scroll-view scroll-y style="height: 500rpx;" 
+                   catchscrolltoupper="upper" 
+                   catchscrolltolower="lower" 
+                   catchscroll="scroll" 
+                   scroll-into-view="{{toView}}" 
+                   scroll-top="{{scrollTop}}">
       <view  wx:if="{{ numbers == 0}}">
         <text >您的菜单是空的哦:(</text>
       </view>
-     <view  wx:if="{{ numbers > 0}}">
+      <view  wx:if="{{ numbers > 0}}">
           <text class="titleforcar">您总共点了{{numbers}}份菜：</text>
-           <navigator 
+           <view 
                   hover-class="weui-cell_active"
                   class="weui-media-box weui-media-box_appmsg"
                   wx:for="{{foodlist}}"
@@ -127,20 +152,39 @@
                         ￥{{itemName.price}} 
                   </view>
                 </view>
-                <view >
-                  <button type="warn" 
-                          size="mini" 
-                          bindtap="deletefood" 
-                          id="{{itemName.price}}"  
-                          data-foodname="{{itemName.name}}"
-                          data-foodimg="{{itemName.imgurl}}" 
-                          >-
-                  </button>  
+                <view class="" >
+                   <view>
+                       <view  wx:if="{{ itemName.count > 0}}" class="minus weui-flex__item">
+                              <text   
+                                        catchtap="deletefood" 
+                                        id="{{itemName.price}}"  
+                                        data-foodname="{{itemName.name}}"
+                                        data-foodimg="{{itemName.imgurl}}"
+                                        data-count="{{itemName.count}}"
+                                        style="color:#fff"
+                              >-</text>
+                  </view>
+                      <view class="classname">
+                      <text wx:if="{{ itemName.count > 0}}" class="number">{{itemName.count}}</text>
+                      </view>
+                      
+                       <view class="plus weui-flex__item">
+                            <text bindtap="addfood"   
+                                      id="{{itemName.price}}"  
+                                      data-foodname="{{itemName.name}}"
+                                      data-foodimg="{{itemName.imgurl}}" 
+                                      data-count="{{itemName.count}}"
+                                      style="color:#fff"
+                            >+</text> 
+                  </view>
+                </view>
                 </view>
               </view>
           </view>
           
-        </navigator>
+        </view>
         </view>
         </scroll-view>
 </view>
+
+

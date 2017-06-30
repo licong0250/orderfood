@@ -11,14 +11,14 @@ Page({
     ,
     menu: [],
     fooddetail:[
-      
     ],
     tag: 'tuijian',
     numbers:0,
     pee:0.0,
     foodlist:Array(),
     showModalStatus: false,
-    selected:''
+    selected:'',
+    isnewfood:true
   },
   /**
   },
@@ -28,14 +28,13 @@ Page({
    */
 
   clickmenu: function (options){
-    console.log(options.target.id);
+    
     var that = this;
     that.setData({
       tag: options.target.id,
       selected: options.target.id
     })
-    console.log('selected:'+that.data.selected)
-    console.log('tag:' + that.data.tag)
+    
     
   },
   /**
@@ -50,6 +49,8 @@ Page({
     
     // 通过shopid获取对应商铺的菜单信息
     that.getImgUrl();
+    
+
   },
   getImgUrl: function () {
     var that = this;
@@ -59,7 +60,7 @@ Page({
     var key3 = shopid + '_fooddetail'
     util.getdata(key1,function(res){
       if (res.data.success) {
-        console.log(res.data.result);
+        console.log("111111")
         that.setData({
           headImgUrls: res.data.result.value
         })
@@ -67,7 +68,7 @@ Page({
     });
     util.getdata(key2, function (res) {
       if (res.data.success) {
-        console.log(res.data.result);
+        console.log("22222222")
         that.setData({
           menu: res.data.result.value
         })
@@ -75,9 +76,9 @@ Page({
     });
     util.getdata(key3, function (res) {
       if (res.data.success) {
-        console.log(res.data.result);
+        console.log("3333333")
         that.setData({
-          fooddetail: res.data.result.value
+          fooddetail: res.data.result.value,
         })
       }
     });
@@ -137,20 +138,58 @@ Page({
     var that = this;
     var price = options.target.id;
     var tempnum = that.data.numbers+1;
-    var prices=(parseFloat(that.data.pee)+parseFloat(price)).toFixed(1);
+    
     var foodname = options.currentTarget.dataset.foodname;
     var foodimg = options.currentTarget.dataset.foodimg;
-    var foodlisttemp ={
-      name: foodname,
-      imgurl: foodimg,
-      price: price
+    var foodcount = options.currentTarget.dataset.count+1;
+    var prices = (parseFloat(that.data.pee) + parseFloat(price)).toFixed(1);
+
+    var foodlisttemp = that.data.foodlist;
+    that.setData({isnewfood: true})
+    for (var i = 0; i < foodlisttemp.length; i++) {
+      if (foodlisttemp[i].name == foodname) {
+
+        foodlisttemp[i].count += 1;
+        that.setData({
+          isnewfood:false,
+          numbers: tempnum,
+          pee: prices,
+          foodlist: foodlisttemp
+        })
+        
+        break;
+      }
     } 
-   
-    that.setData({
-      numbers: tempnum,
-      pee: prices,
-      foodlist: this.data.foodlist.concat(foodlisttemp)
-    });
+    if (that.data.isnewfood){
+      var foodlisttemp1 = {
+        name: foodname,
+        imgurl: foodimg,
+        price: price,
+        count: foodcount
+      }
+
+      that.setData({
+        numbers: tempnum,
+        pee: prices,
+        foodlist: that.data.foodlist.concat(foodlisttemp1)
+      });
+    }
+    var foodlisttemps = that.data.foodlist;
+    var fooddetailtemp = that.data.fooddetail;
+    for (var j = 0; j < foodlisttemps.length; j++) {
+      //更新数量
+      
+      for (var i = 0; i < fooddetailtemp.length; i++) {
+        if (fooddetailtemp[i].name == foodlisttemps[j].name) {
+
+          fooddetailtemp[i].count = foodlisttemps[j].count;
+          that.setData({
+            fooddetail: fooddetailtemp
+          })
+
+        }
+      } 
+    } 
     
   },
 
@@ -164,26 +203,50 @@ Page({
     var prices = (parseFloat(that.data.pee) - parseFloat(price)).toFixed(1);
     var foodname = options.currentTarget.dataset.foodname;
     var foodimg = options.currentTarget.dataset.foodimg;
+    var foodcount = options.currentTarget.dataset.count;
     var foodlisttemp = that.data.foodlist;
-    console.log(foodlisttemp)
+    
+    
     for (var i = 0; i < foodlisttemp.length;i++){
       if (foodlisttemp[i].name == foodname){
         
-        var temp = foodlisttemp.splice(i, 1);
+        
+        foodcount--;
+        foodlisttemp[i].count = foodcount;
+        // foodlisttemp.splice(i, 1);
+        if (foodcount == 0) {
+
+          foodlisttemp.splice(i, 1);
+        }
         break;
       }
     } 
-    console.log(foodlisttemp)
+    
     that.setData({
       numbers: tempnum,
       pee: prices,
       foodlist: foodlisttemp
     });
+    var foodlisttemps = that.data.foodlist;
+    var fooddetailtemp = that.data.fooddetail;
+    
+      //更新数量
+      for (var i = 0; i < fooddetailtemp.length; i++) {
+        if (fooddetailtemp[i].name == foodname) {
+
+          fooddetailtemp[i].count = foodcount;
+          that.setData({
+            fooddetail: fooddetailtemp
+          })
+          break;
+        }
+      
+    } 
   },
 
  showfooddetail:function(){
     var that = this;
-    console.log( that.data.foodlist);
+    
     that.setData({
       showModalStatus:true
     })

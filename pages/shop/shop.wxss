@@ -94,3 +94,42 @@
   background-color: gainsboro;
   border-right:1px solid  lightgray;
 }
+.plusandminus{
+  width: 108rpx;  
+  height: 32rpx;
+  display:flex;
+}
+.minus{
+  text-align: center;
+  justify-content: flex-start;
+  align-content: center;
+  background-color: gray;
+  line-height: 17px;
+  border-radius: 9px;
+  width: 18px;
+  height: 18px;
+  flex-direction:row;
+  position: absolute;  
+  top:50px;
+  right: 80px;
+}
+.plus{
+    background-color: green;
+    text-align: center;
+    justify-content: flex-start;
+    align-content: center;
+    width: 18px;
+    height: 18px;
+    line-height: 17px;
+    border-radius: 9px;
+    flex-direction:row;
+    position: absolute;  
+    top:50px;
+    right: 30px;
+}
+.number{
+  position: absolute;  
+  top:45px;
+  right: 60px;
+ flex-direction:row;
+}
